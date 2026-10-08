@@ -1,0 +1,48 @@
+services:
+  alarm-api:
+    build: .
+    command: uvicorn apps.backend.main:app --host 0.0.0.0 --port 8000
+    environment:
+      ALARM_API_TOKEN: ${ALARM_API_TOKEN:-demo-token}
+    ports: ["8000:8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  alarm-mcp:
+    build: .
+    command: uvicorn mcp_servers.alarm_management.server:app --host 0.0.0.0 --port 9000
+    environment:
+      ALARM_API_BASE_URL: http://alarm-api:8000
+      ALARM_API_TOKEN: ${ALARM_API_TOKEN:-demo-token}
+      MCP_SERVER_TOKEN: ${MCP_SERVER_TOKEN:-demo-token}
+    depends_on:
+      alarm-api:
+        condition: service_healthy
+    ports: ["9000:9000"]
+
+  copilot:
+    build: .
+    command: uvicorn apps.backend.copilot_api:app --host 0.0.0.0 --port 9100
+    environment:
+      MCP_SERVER_URL: http://alarm-mcp:9000/mcp
+      MCP_SERVER_TOKEN: ${MCP_SERVER_TOKEN:-demo-token}
+      RAG_DOCUMENT_PATH: ./rag/documents
+      RAG_INDEX_PATH: ./rag/index
+      LLM_PROVIDER: ${LLM_PROVIDER:-local}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+    depends_on:
+      - alarm-mcp
+    ports: ["9100:9100"]
+
+  gui:
+    build: .
+    command: python apps/frontend/server.py
+    environment:
+      COPILOT_BACKEND_URL: http://copilot:9100
+    depends_on:
+      - copilot
+    ports: ["9200:9200"]

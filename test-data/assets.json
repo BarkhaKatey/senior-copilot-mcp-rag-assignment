@@ -1,0 +1,8 @@
+[
+  {"asset_id":"AST-BFP-101","asset_name":"Boiler Feed Pump 101","site":"EastRefinery","unit":"Unit 2","asset_type":"centrifugal_pump","status":"running","manufacturer":"ABB Industrial","model":"BFP-X200","criticality":"high","related_assets":["AST-BFP-102","AST-MTR-101","AST-DEAR-101"]},
+  {"asset_id":"AST-BFP-102","asset_name":"Boiler Feed Pump 102","site":"EastRefinery","unit":"Unit 2","asset_type":"centrifugal_pump","status":"running","manufacturer":"ABB Industrial","model":"BFP-X200","criticality":"high","related_assets":["AST-BFP-101","AST-MTR-102"]},
+  {"asset_id":"AST-CMP-201","asset_name":"Compressor Train A","site":"NorthPlant","unit":"Unit 1","asset_type":"compressor","status":"running","manufacturer":"ABB Industrial","model":"CMP-A900","criticality":"critical","related_assets":["AST-CMP-202","AST-MTR-201"]},
+  {"asset_id":"AST-CMP-202","asset_name":"Compressor Train B","site":"NorthPlant","unit":"Unit 1","asset_type":"compressor","status":"running","manufacturer":"ABB Industrial","model":"CMP-A900","criticality":"critical","related_assets":["AST-CMP-201","AST-MTR-202"]},
+  {"asset_id":"AST-MTR-501","asset_name":"Unit 5 Motor 501","site":"SouthPlant","unit":"Unit 5","asset_type":"motor","status":"running","manufacturer":"ABB Industrial","model":"MTR-500","criticality":"high","related_assets":["AST-MTR-502","AST-PMP-501"]},
+  {"asset_id":"AST-MTR-502","asset_name":"Unit 5 Motor 502","site":"SouthPlant","unit":"Unit 5","asset_type":"motor","status":"running","manufacturer":"ABB Industrial","model":"MTR-500","criticality":"high","related_assets":["AST-MTR-501","AST-PMP-502"]}
+]
